@@ -3,7 +3,7 @@ package ua.kas.main;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
@@ -13,6 +13,10 @@ import java.nio.ByteBuffer;
 import javax.imageio.ImageIO;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Messenger extends Application {
@@ -21,47 +25,61 @@ public class Messenger extends Application {
 
 	static String address;
 
+	private static OutputStream out;
+
+	private Parent root;
+
+	private static BufferedImage image;
+
+	static BufferedImage encryptionImage;
+
 	@Override
-	public void start(Stage arg0) throws Exception {
+	public void start(Stage primaryStage) throws Exception {
 		if (server) {
-			ServerSocket serverSocket = new ServerSocket(13085);
+			root = FXMLLoader.load(getClass().getResource("Server.fxml"));
+		} else {
+			root = FXMLLoader.load(getClass().getResource("User.fxml"));
+		}
+		Scene scene = new Scene(root, 400 - 10, 200 - 10);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setTitle("KriptoImageMessenger");
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public static void work() throws IOException {
+		if (server) {
+			ServerSocket serverSocket = new ServerSocket(8888);
 			Socket socket = serverSocket.accept();
 			InputStream inputStream = socket.getInputStream();
-
-			System.out.println("Reading: " + System.currentTimeMillis());
 
 			byte[] sizeAr = new byte[4];
 			inputStream.read(sizeAr);
 			int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
-
 			byte[] imageAr = new byte[size];
 			inputStream.read(imageAr);
 
-			BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageAr));
+			image = ImageIO.read(new ByteArrayInputStream(imageAr));
 
-			System.out.println(
-					"Received " + image.getHeight() + "x" + image.getWidth() + ": " + System.currentTimeMillis());
-			ImageIO.write(image, "png", new File("3.png"));
+			MessengerServer.decodingImage = image;
 
+			socket.close();
 			serverSocket.close();
-		} else {
-			Socket socket = new Socket("localhost", 13085);
-			OutputStream outputStream = socket.getOutputStream();
 
-			BufferedImage image = ImageIO.read(new File("2.png"));
+		} else {
+			Socket socket = new Socket(address, 8888);
+			out = socket.getOutputStream();
 
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-			ImageIO.write(image, "png", byteArrayOutputStream);
+			ImageIO.write(encryptionImage, "png", byteArrayOutputStream);
 
 			byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-			outputStream.write(size);
-			outputStream.write(byteArrayOutputStream.toByteArray());
-			outputStream.flush();
-			System.out.println("Flushed: " + System.currentTimeMillis());
-
-			// Thread.sleep(120000);
-			System.out.println("Closing: " + System.currentTimeMillis());
+			out.write(size);
+			out.write(byteArrayOutputStream.toByteArray());
+			out.flush();
 			socket.close();
 		}
 	}
+
 }
