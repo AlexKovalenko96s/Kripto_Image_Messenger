@@ -40,7 +40,7 @@ public class Messenger extends Application {
 		} else {
 			root = FXMLLoader.load(getClass().getResource("User.fxml"));
 		}
-		Scene scene = new Scene(root, 400 - 10, 200 - 10);
+		Scene scene = new Scene(root, 400 - 5, 200 - 5);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setTitle("KriptoImageMessenger");
 		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));

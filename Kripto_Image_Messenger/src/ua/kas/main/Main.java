@@ -15,7 +15,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("DialogDesign.fxml"));
-			Scene scene = new Scene(root, 300 - 10, 150 - 10);
+			Scene scene = new Scene(root, 300 - 5, 150 - 5);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("KriptoImageMessenger");
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.png")));

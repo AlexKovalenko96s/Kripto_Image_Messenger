@@ -20,20 +20,15 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Button>
-      <TextField fx:id="tf_enterText" layoutX="236.0" layoutY="82.0" promptText="write text">
+      <TextField fx:id="tf_enterText" layoutX="236.0" layoutY="89.0" promptText="write text">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </TextField>
-      <Button layoutX="236.0" layoutY="136.0" mnemonicParsing="false" onAction="#go" prefHeight="50.0" prefWidth="150.0" text="Start">
+      <Button layoutX="236.0" layoutY="123.0" mnemonicParsing="false" onAction="#go" prefHeight="50.0" prefWidth="150.0" text="Start">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="tf_enterKey" layoutX="236.0" layoutY="108.0" promptText="key">
-         <font>
-            <Font name="Times New Roman" size="12.0" />
-         </font>
-      </TextField>
    </children>
 </AnchorPane>

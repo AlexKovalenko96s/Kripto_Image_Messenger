@@ -15,20 +15,15 @@
          </font>
       </Label>
       <ImageView fx:id="iv_decoding" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-      <TextField fx:id="tf_outText" layoutX="236.0" layoutY="147.0" promptText="decoding text">
+      <TextField fx:id="tf_outText" layoutX="236.0" layoutY="131.0" promptText="decoding text">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </TextField>
-      <Button layoutX="236.0" layoutY="89.0" mnemonicParsing="false" onAction="#go" prefHeight="50.0" prefWidth="150.0" text="Start">
+      <Button layoutX="236.0" layoutY="67.0" mnemonicParsing="false" onAction="#go" prefHeight="50.0" prefWidth="150.0" text="Start">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="tf_outKey" layoutX="236.0" layoutY="59.0" promptText="key">
-         <font>
-            <Font name="Times New Roman" size="12.0" />
-         </font>
-      </TextField>
    </children>
 </AnchorPane>
