@@ -75,9 +75,11 @@ public class Messenger extends Application {
 			ImageIO.write(encryptionImage, "png", byteArrayOutputStream);
 
 			byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+
 			out.write(size);
 			out.write(byteArrayOutputStream.toByteArray());
 			out.flush();
+
 			socket.close();
 		}
 	}
